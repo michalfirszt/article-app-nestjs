@@ -18,7 +18,7 @@ export class User {
     default: null,
     nullable: true,
   })
-  emailVerifiedAt: Date | null;
+  emailVerifiedAt: string | null;
 
   @Column({ nullable: true })
   password: string | null;
@@ -32,7 +32,7 @@ export class User {
     default: () => 'CURRENT_TIMESTAMP',
     nullable: true,
   })
-  createdAt: Date | null;
+  createdAt: string | null;
 
   @Column({
     name: 'updated_at',
@@ -40,5 +40,5 @@ export class User {
     default: null,
     nullable: true,
   })
-  updatedAt: Date | null;
+  updatedAt: string | null;
 }
