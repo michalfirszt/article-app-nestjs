@@ -2,8 +2,12 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { AuthController, UserController } from './controllers';
-import { AuthService, UserService } from './services';
+import {
+  AuthController,
+  UserController,
+  ArticleController,
+} from './controllers';
+import { AuthService, UserService, ArticleService } from './services';
 import { AuthModule, UserModule } from './modules';
 
 import config from '../ormconfig';
@@ -15,7 +19,7 @@ import config from '../ormconfig';
     AuthModule,
     UserModule,
   ],
-  controllers: [AuthController, UserController],
-  providers: [AuthService, UserService],
+  controllers: [AuthController, UserController, ArticleController],
+  providers: [AuthService, UserService, ArticleService],
 })
 export class AppModule {}

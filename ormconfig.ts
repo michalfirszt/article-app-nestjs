@@ -1,6 +1,6 @@
 import { ConfigModule } from '@nestjs/config';
 import { MysqlConnectionOptions } from 'typeorm/driver/mysql/MysqlConnectionOptions';
-import { CustomNamingStrategy } from './src/strategies/customNaming.strategy';
+import { CustomNamingStrategy } from './src/strategies';
 
 ConfigModule.forRoot();
 
