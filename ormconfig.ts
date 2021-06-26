@@ -1,5 +1,6 @@
 import { ConfigModule } from '@nestjs/config';
 import { MysqlConnectionOptions } from 'typeorm/driver/mysql/MysqlConnectionOptions';
+import { CustomNamingStrategy } from './src/strategies/customNaming.strategy';
 
 ConfigModule.forRoot();
 
@@ -11,6 +12,7 @@ const config: MysqlConnectionOptions = {
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
   synchronize: false,
+  namingStrategy: new CustomNamingStrategy(),
   entities: ['dist/**/*.entity{.ts,.js}'],
   migrations: ['dist/src/database/migrations/*.js'],
   cli: {

@@ -1,4 +1,12 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  Index,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+
+import { Article } from './article.entity';
 
 @Entity({ name: 'users' })
 export class User {
@@ -41,4 +49,7 @@ export class User {
     nullable: true,
   })
   updatedAt: string | null;
+
+  @OneToMany((type) => Article, (article) => article.user)
+  articles: Article[];
 }
