@@ -6,8 +6,14 @@ import {
   AuthController,
   UserController,
   ArticleController,
+  EventController,
 } from './controllers';
-import { AuthService, UserService, ArticleService } from './services';
+import {
+  AuthService,
+  UserService,
+  ArticleService,
+  EventService,
+} from './services';
 import { AuthModule, UserModule } from './modules';
 
 import config from '../ormconfig';
@@ -19,7 +25,12 @@ import config from '../ormconfig';
     AuthModule,
     UserModule,
   ],
-  controllers: [AuthController, UserController, ArticleController],
-  providers: [AuthService, UserService, ArticleService],
+  controllers: [
+    AuthController,
+    UserController,
+    ArticleController,
+    EventController,
+  ],
+  providers: [AuthService, UserService, ArticleService, EventService],
 })
 export class AppModule {}

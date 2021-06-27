@@ -6,12 +6,13 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('api');
+  app.enableCors();
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,
     }),
   );
 
-  await app.listen(3000);
+  await app.listen(process.env.APP_PORT);
 }
 bootstrap();
