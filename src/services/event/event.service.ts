@@ -4,12 +4,17 @@ import { getRepository } from 'typeorm';
 
 @Injectable()
 export class EventService {
-  async getEvents(): Promise<Event[]> {
+  async getEvents(): Promise<{ [key: string]: Event }> {
     const events = await getRepository(Event)
       .createQueryBuilder('event')
       .getMany();
 
-    return events;
+    return events.reduce(
+      (list: { [key: string]: Event }, event: Event) => (
+        (list[event.id] = event), list
+      ),
+      {},
+    );
   }
 
   async findOne(id: number): Promise<Event> {

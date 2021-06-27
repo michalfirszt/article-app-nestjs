@@ -7,7 +7,7 @@ export class EventController {
   constructor(private eventService: EventService) {}
 
   @Get('list')
-  async list(): Promise<Event[]> {
+  async list(): Promise<{ [key: string]: Event }> {
     const events = await this.eventService.getEvents();
 
     return events;
