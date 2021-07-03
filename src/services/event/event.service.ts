@@ -1,6 +1,14 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Event } from '../../entities';
 import { getRepository } from 'typeorm';
+
+export type CreateEventData = {
+  name: string;
+  slug: string;
+  latitude: number;
+  longitude: number;
+  description: string;
+};
 
 @Injectable()
 export class EventService {
@@ -24,5 +32,26 @@ export class EventService {
       .getOne();
 
     return event;
+  }
+
+  async create({
+    name,
+    slug,
+    latitude,
+    longitude,
+    description,
+  }: CreateEventData): Promise<number> {
+    try {
+      const insert = await getRepository(Event)
+        .createQueryBuilder('event')
+        .insert()
+        .into(Event)
+        .values({ name, slug, latitude, longitude, description })
+        .execute();
+
+      return insert.raw.insertId;
+    } catch (error) {
+      throw new HttpException(error.sqlMessage, HttpStatus.BAD_REQUEST);
+    }
   }
 }
