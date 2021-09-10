@@ -43,13 +43,42 @@ export class EventService {
   }: CreateEventData): Promise<number> {
     try {
       const insert = await getRepository(Event)
-        .createQueryBuilder('event')
+        .createQueryBuilder()
         .insert()
         .into(Event)
         .values({ name, slug, latitude, longitude, description })
         .execute();
 
       return insert.raw.insertId;
+    } catch (error) {
+      throw new HttpException(error.sqlMessage, HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  async update(
+    id: number,
+    { name, slug, latitude, longitude, description }: CreateEventData,
+  ): Promise<void> {
+    try {
+      await getRepository(Event)
+        .createQueryBuilder()
+        .update(Event)
+        .set({ name, slug, latitude, longitude, description })
+        .where('id = :id', { id })
+        .execute();
+    } catch (error) {
+      throw new HttpException(error.sqlMessage, HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  async delete(id): Promise<void> {
+    try {
+      await getRepository(Event)
+        .createQueryBuilder()
+        .delete()
+        .from(Event)
+        .where('id = :id', { id })
+        .execute();
     } catch (error) {
       throw new HttpException(error.sqlMessage, HttpStatus.BAD_REQUEST);
     }
