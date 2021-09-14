@@ -9,8 +9,8 @@ interface SeedConfig extends MysqlConnectionOptions {
 const seedConfig: SeedConfig = {
   ...config,
   entities: ['src/entities/**/*.entity{.ts,.js}'],
-  seeds: ['src/database/seeds/**/*{.ts,.js}'],
-  factories: ['src/database/factories/**/*{.ts,.js}'],
+  seeds: ['src/database/seeds/**/*.seed{.ts,.js}'],
+  factories: ['src/database/factories/**/*.factory{.ts,.js}'],
 };
 
 export default seedConfig;

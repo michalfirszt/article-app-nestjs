@@ -26,7 +26,8 @@
     "migration:revert": "npm run build && npm run typeorm migration:revert",
     "schema:log": "npm run typeorm schema:log",
     "seed:config": "ts-node ./node_modules/typeorm-seeding/dist/cli.js --configName seedconfig.ts config",
-    "seed:run": "ts-node ./node_modules/typeorm-seeding/dist/cli.js --configName seedconfig.ts seed"
+    "seed:select": "ts-node ./node_modules/typeorm-seeding/dist/cli.js --configName seedconfig.ts --seed",
+    "seed:all": "ts-node ./node_modules/typeorm-seeding/dist/cli.js --configName seedconfig.ts seed"
   },
   "dependencies": {
     "@nestjs/common": "^7.6.15",
