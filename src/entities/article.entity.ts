@@ -2,12 +2,14 @@ import {
   Column,
   Entity,
   ManyToOne,
+  ManyToMany,
   PrimaryGeneratedColumn,
   JoinColumn,
+  JoinTable,
   Index,
 } from 'typeorm';
 
-import { User } from './user.entity';
+import { Category, User } from './index';
 
 @Entity({ name: 'articles' })
 export class Article {
@@ -49,4 +51,20 @@ export class Article {
   })
   @JoinColumn({ name: 'user_id' })
   user: User;
+
+  @ManyToMany(() => Category, (category) => category.articles, {
+    cascade: true,
+  })
+  @JoinTable({
+    name: 'articles_categories',
+    joinColumn: {
+      name: 'article_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'category_id',
+      referencedColumnName: 'id',
+    },
+  })
+  categories: Category[];
 }
