@@ -7,6 +7,7 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
+import { getManager } from 'typeorm';
 
 import { ArticleService } from '../../services';
 import { Article, User } from '../../entities';
@@ -23,6 +24,15 @@ export class ArticleController {
     const articles = await this.articleService.getArticles();
 
     return articles;
+  }
+
+  @Get('ids')
+  async ids(): Promise<any> {
+    const ids = await getManager().query(
+      'WITH articleIds AS (SELECT a.id FROM articles AS a) SELECT SUM(id) AS ids FROM articleIds',
+    );
+
+    return ids;
   }
 
   @Get(':id')
