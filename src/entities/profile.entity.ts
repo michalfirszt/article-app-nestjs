@@ -3,7 +3,6 @@ import {
   Entity,
   OneToOne,
   PrimaryGeneratedColumn,
-  Index,
   JoinColumn,
 } from 'typeorm';
 
@@ -24,9 +23,8 @@ export class Profile {
   age: number;
 
   @OneToOne((type) => User, (user) => user.profile, {
-    createForeignKeyConstraints: false,
+    onDelete: 'CASCADE',
   })
-  @Index('profile-user-unique', ['user_id'], { unique: true })
   @JoinColumn({ name: 'user_id' })
   user: User;
 }
