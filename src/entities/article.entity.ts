@@ -7,9 +7,10 @@ import {
   JoinColumn,
   JoinTable,
   Index,
+  OneToMany,
 } from 'typeorm';
 
-import { Category, User } from './index';
+import { Category, Reaction, User } from './index';
 
 @Entity({ name: 'articles' })
 export class Article {
@@ -67,4 +68,7 @@ export class Article {
     },
   })
   categories: Category[];
+
+  @OneToMany(() => Reaction, (reaction) => reaction.article)
+  reactions: Reaction[];
 }

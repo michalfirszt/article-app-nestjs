@@ -7,7 +7,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-import { Article, Profile } from './index';
+import { Article, Profile, Reaction } from './index';
 
 @Entity({ name: 'users' })
 export class User {
@@ -56,4 +56,7 @@ export class User {
 
   @OneToOne((type) => Profile, (profile) => profile.user)
   profile: Profile;
+
+  @OneToMany(() => Reaction, (reaction) => reaction.user)
+  reactions: Reaction[];
 }
