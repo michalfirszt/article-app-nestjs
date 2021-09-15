@@ -1,13 +1,18 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { getRepository } from 'typeorm';
+import { getRepository, getManager } from 'typeorm';
 
-import { Article, User } from '../../entities';
+import { Article, Category, User } from '../../entities';
 
 export type CreateArticleData = {
   user: User;
   title: string;
   slug: string;
   description: string;
+};
+
+export type AssignCategoriesData = {
+  article: Article;
+  categoryIds: string[];
 };
 
 @Injectable()
@@ -47,5 +52,18 @@ export class ArticleService {
     } catch (error) {
       throw new HttpException(error.sqlMessage, HttpStatus.BAD_REQUEST);
     }
+  }
+
+  async assignCategories({
+    article,
+    categoryIds,
+  }: AssignCategoriesData): Promise<void> {
+    const categories = await getRepository(Category)
+      .createQueryBuilder('category')
+      .whereInIds(categoryIds)
+      .getMany();
+
+    article.categories = categories;
+    await getManager().save(article);
   }
 }

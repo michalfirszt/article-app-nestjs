@@ -12,7 +12,7 @@ import { getManager } from 'typeorm';
 import { ArticleService } from '../../services';
 import { Article, User } from '../../entities';
 import { JwtAuthGuard } from '../../modules/auth/jwt-auth.guard';
-import { CreateArticleDto } from './article.validation';
+import { AssignCategoriesDto, CreateArticleDto } from './article.validation';
 import { createSlug } from '../../utilities';
 
 @Controller('article')
@@ -58,6 +58,17 @@ export class ArticleController {
       description,
     });
     const article = await this.articleService.findOne(newArticleId);
+
+    return article;
+  }
+
+  @Post('category')
+  async category(
+    @Query()
+    { articleId, categoryIds }: AssignCategoriesDto,
+  ): Promise<Article> {
+    const article = await this.articleService.findOne(Number(articleId));
+    await this.articleService.assignCategories({ article, categoryIds });
 
     return article;
   }
