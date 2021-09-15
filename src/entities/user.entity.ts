@@ -2,11 +2,12 @@ import {
   Column,
   Entity,
   Index,
+  OneToOne,
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-import { Article } from './article.entity';
+import { Article, Profile } from './index';
 
 @Entity({ name: 'users' })
 export class User {
@@ -52,4 +53,7 @@ export class User {
 
   @OneToMany((type) => Article, (article) => article.user)
   articles: Article[];
+
+  @OneToOne((type) => Profile, (profile) => profile.user)
+  profile: Profile;
 }
